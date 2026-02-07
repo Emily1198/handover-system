@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>交班紀錄</title>
+</head>
+<body>
+
+<h1>過年交班紀錄</h1>
+
+<p>
+  交班日期：<br>
+  <input type="date" id="date">
+</p>
+
+<p>
+  班別：<br>
+  <select id="shift">
+    <option>白班</option>
+    <option>小夜</option>
+    <option>大夜</option>
+  </select>
+</p>
+
+<p>
+  床號：<br>
+  <input type="text" id="Number">
+</p>
+
+<p>
+  住民姓名：<br>
+  <input type="text" id="Name">
+</p>
+
+<p>
+  焦點：<br>
+  <input type="text" id="Focus">
+</p>
+
+<p>
+  交班內容(紀錄)：<br>
+  <textarea id="content" rows="5" cols="40"></textarea>
+</p>
+
+<p>
+  記錄人員：<br>
+  <input type="text" id="staff">
+</p>
+
+<button onclick="saveData()">送出並儲存</button>
+
+<hr>
+
+<h2>已儲存的交班紀錄</h2>
+<div id="records"></div>
+
+<script>
+function saveData() {
+  let data = {
+    date: document.getElementById("date").value,
+    shift: document.getElementById("shift").value,
+    Number: document.getElementById("Number").value,
+    Name: document.getElementById("Name").value,
+    Focus: document.getElementById("Focus").value,
+    content: document.getElementById("content").value,
+    staff: document.getElementById("staff").value,
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbyzjKINH9F-t1DDXAFDGlzdVolOAC9cRt8fA6wwJ5jovNut3w9rtxHIvcSy57hVzSkHHQ/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    alert("交班內容已送出並儲存");
+    document.getElementById("content").value = "";
+  })
+  .catch(error => {
+    alert("送出失敗");
+  });
+}
+</script>
+
+</body>
+</html>
